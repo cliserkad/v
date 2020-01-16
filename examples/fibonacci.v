@@ -1,38 +1,34 @@
 // This program displays the fibonacci sequence
 
+
 import os
 
 fn main() {
 	// Check for user input
 	if os.args.len != 2 {
 		println('usage: fibonacci [rank]')
-
 		// Exit
 		return
 	}
-	
 	// Parse first argument and cast it to int
 	stop := os.args[1].int()
-
-	// Can only calculate correctly until rank 92
+	// After rank 92, the 64 bit signed int can no longer store the output
 	if stop > 92 {
 		println('rank must be 92 or less')
 		return
 	}
+	println(fibonacci(stop))
+}
 
-	// Three consecutive terms of the sequence
-	mut a := u64(0)
-	mut b := u64(0)
-	mut c := u64(1)
-
-	for i := 0; i < stop; i++ {
-		// Set a and b to the next term
-		a = b
-		b = c
-		// Compute the new term
-		c = a + b
-
-		// Print the new term
-		println(c)
+// recursive implementation
+fn fibonacci(rank int) int {
+	if rank == 0 {
+		return 0
+	}
+	else if rank == 1 || rank == 2 {
+		return 1
+	}
+	else {
+		return fibonacci(rank - 1) + fibonacci(rank - 2)
 	}
 }
